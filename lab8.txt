@@ -1,0 +1,80 @@
+#!/bin/bash
+
+#Akhond Sarah Mesbah 041009466
+#CST8102_30
+#Name of the script : myscript
+#27th november 2020
+#to demonstrate decision structures
+
+choice=n
+while [ $choice != "Q" ] && [ $choice != "q" ]
+do
+	
+echo "Choose one of the following options"
+echo "A to create a user account"
+echo "B to delete a user account"
+echo "C to change the supplementary group for a user account"
+echo "D to change the initial group for a user account"
+echo "E to change default login shell for a user account"
+echo "F to change accoutn expiration date for a user account"
+echo "Q to quit"
+
+read -p "What would you like to do: " choice
+
+	
+if [ $choice = "A" ] || [ $choice = "a" ]
+then
+read -p "Enter user name: " username
+read -p "Enter user home directory: " homedirectory
+read -p "Enter default login shell: " loginshell
+useradd -d $homedirectory -m -s $loginshell $username
+cat /etc/passwd|grep $username
+sleep 3
+
+elif [ $choice = "B" ] || [ $choice = "b" ]
+then
+read -p "Enter user name: " username
+userdel -r $username
+sleep 3
+
+elif [ $choice = "C" ] || [ $choice = "c" ]
+then
+read -p "Enter user name: " username
+read -p "Enter the supplementary groupname: " supplementarygrp
+usermod -a -G $supplementarygrp $username
+sleep 3
+
+elif [ $choice = "D" ] || [ $choice = "d" ]
+then
+read -p "Enter user name: " username
+read -p "Enter the initial groupname: " initialgrp
+usermod -g $initialgrp $username
+cat /etc/passwd|grep $username
+sleep 3
+
+elif [ $choice = "E" ] || [ $choice = "e" ]
+then
+read -p "Enter user name: " username
+read -p "Enter default login shell: " loginshell
+usermod -s $loginshell $username
+cat /etc/passwd|grep $username
+sleep 3
+
+elif [ $choice = "F" ] || [ $choice = "f" ]
+then
+read -p "Enter user name: " username
+read -p "Enter date for accoutn expiration: " exdate
+usermod -e $exdate $username
+cat /etc/passwd|grep $username
+sleep 3
+
+else [ $choice = "Q" ] || [ $choice = "q" ]
+fi
+if
+       	[ $choice != "A" ] && [ $choice != "a" ] && [ $choice != "B" ] && [ $choice != "b" ] && [ $choice != "C" ] && [ $choice != "c" ] && [ $choice != "D" ] && [ $choice != "d" ] && [ $choice != "E" ] && [ $choice != "e" ] && [ $choice != "F" ] && [ $choice != "f" ] && [ $choice != "Q" ] && [ $choice != "q" ]
+	then
+echo "Invalid option,please try again"
+fi	
+done
+
+
